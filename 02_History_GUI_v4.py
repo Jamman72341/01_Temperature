@@ -118,7 +118,6 @@ class History:
                                      font="Arial 12 bold", command=partial(self.close_history, partner))
         self.dismiss_button.grid(row=0, column=1)
 
-
     def close_history(self, partner):
         # Put history button back to normal...
         partner.history_button.config(state=NORMAL)
@@ -155,7 +154,7 @@ class Export:
                                  font="arial 14 bold", bg=background)
         self.how_heading.grid(row=0)
 
-        self.export_text = Label(self.export_frame, text="Enter a filename"
+        self.export_text = Label(self.export_frame, text="Enter a filename "
                                                          "in the box below "
                                                          "and press the Save "
                                                          "button to save your "
@@ -180,8 +179,54 @@ class Export:
 
         # Filename Entry Box (row 3)
         self.filename_entry = Entry(self.export_frame, width=20,
-                                    font="Arial 14 bold", justofy=CENTER)
+                                    font="Arial 14 bold", justify=CENTER)
         self.filename_entry.grid(row=3, pady=10)
+
+        # Save / Cancel Frame (row 4)
+        self.save_cancel_frame = Frame(self.export_frame)
+        self.save_cancel_frame.grid(row=5, pady=10)
+
+        # Save and Cancel Buttons (row 0 of save_cancel_frame)
+        self.save_button = Button(self.save_cancel_frame, text="save",
+                                  command=partial(lambda: self.save_history(partner, calc_history)))
+
+        self.save_button.grid(row=0, column=0)
+
+        self.cancel_button = Button(self.save_cancel_frame, text="Cancel",
+                                    command=partial(self.close_export, partner))
+        self.cancel_button.grid(row=0, column=1)
+
+    def save_history(self, partner, calc_history):
+
+        # Regular expression to check filename is valid
+        valid_char = "[A-Za-z0-9_]"
+        has_error = "no"
+
+        filename = self.filename_entry.get()
+        print(filename)
+
+        for letter in filename:
+            if re.match(valid_char, letter):
+                continue
+
+            elif letter == " ":
+                problem = "(no spaces allowed) "
+
+            else:
+                problem = ("(no {}'s allowed)".format(letter))
+            has_error = "yes"
+            break
+
+        if filename == "":
+            problem = "can't be blank"
+            has_error = "yes"
+
+        if has_error == "yes":
+
+    def close_export(self, partner):
+        # Put export button back to normal...
+        partner.export_button.config(state=NORMAL)
+        self.export_box.destroy()
 
 # main routine
 if __name__ == "__main__":
