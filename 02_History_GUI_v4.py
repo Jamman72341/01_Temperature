@@ -1,5 +1,6 @@
 from tkinter import *
 from functools import partial   # To prevent unwanted windows
+import re
 
 import random
 
@@ -182,14 +183,18 @@ class Export:
                                     font="Arial 14 bold", justify=CENTER)
         self.filename_entry.grid(row=3, pady=10)
 
-        # Save / Cancel Frame (row 4)
+        # Error message Labels (initially blank, row 4)
+        self.save_error_label = Label(self.export_frame, text="", fg="orange",
+                                      bg=background)
+        self.save_error_label.grid(row=4)
+
+        # Save / Cancel Frame (row 5)
         self.save_cancel_frame = Frame(self.export_frame)
         self.save_cancel_frame.grid(row=5, pady=10)
 
         # Save and Cancel Buttons (row 0 of save_cancel_frame)
         self.save_button = Button(self.save_cancel_frame, text="save",
                                   command=partial(lambda: self.save_history(partner, calc_history)))
-
         self.save_button.grid(row=0, column=0)
 
         self.cancel_button = Button(self.save_cancel_frame, text="Cancel",
@@ -222,6 +227,29 @@ class Export:
             has_error = "yes"
 
         if has_error == "yes":
+            # Display error message
+            self.save_error_label.config(text="Invalid filename - {}".format(problem))
+            # Change entry box background to pink
+            self.filename_entry.config(bg="#ffafaf")
+            print()
+
+        else:
+            # If there are no errors, generate text file and then close programme
+            # add .txt suffix!
+            filename = filename + ".txt"
+
+            # create file to hold data
+            f = open(filename, "w+")
+
+            # add new line at enf of each item
+            for item in calc_history:
+                f.write(item + "\n")
+
+            # close file
+            f.close()
+
+            # close dialogue
+            self.close_export(partner)
 
     def close_export(self, partner):
         # Put export button back to normal...
