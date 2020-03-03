@@ -59,7 +59,7 @@ class Converter:
 
         # Answer label (row 4)
         self.converted_label = Label(self.converter_frame, font="Arial 14 bold",
-                                     fg="white", bg=background_color,
+                                     fg="black", bg=background_color,
                                      pady=10, text="Conversion goes here")
         self.converted_label.grid(row=4)
 
@@ -218,7 +218,8 @@ class History:
 
         # Export Button
         self.export_button = Button(self.export_dismiss_frame, text="Export",
-                                    font="Arial 12 bold")
+                                    font="Arial 12 bold",
+                                    command=lambda: self.export(calc_history))
         self.export_button.grid(row=0, column=0)
 
         # Dismiss Button
@@ -230,6 +231,9 @@ class History:
         # Put history button back to normal...
         partner.calc_hist_button.config(state=NORMAL)
         self.history_box.destroy()
+
+    def export(self, calc_history):
+        Export(self, calc_history)
 
 
 class Export:
