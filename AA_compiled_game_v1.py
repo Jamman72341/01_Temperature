@@ -126,7 +126,7 @@ class Start:
 
         except ValueError:
             has_errors = "yes"
-            error_feedback = "Please enter a dollar amount (no text / decimals)"
+            error_feedback = "PLease enter a dollar amount (no text / decimals)"
 
         if has_errors == "yes":
             self.start_amount_entry.config(bg=error_back)
@@ -161,8 +161,6 @@ class Game:
         self.game_box = Toplevel()
         self.game_frame = Frame(self.game_box)
         self.game_frame.grid()
-
-
 
 
 # main routine
