@@ -230,11 +230,6 @@ class Game:
         self.help_export_frame = Frame(self.game_frame)
         self.help_export_frame.grid(row=5, pady=10)
 
-        self.help_button = Button(self.help_export_frame, text="Help / Rules",
-                                  font="Arial 15 bold",
-                                  bg="#808080", fg="white")
-        self.help_button.grid(row=0, column=0, padx=2)
-
         # Quit Button
         self.quit_button = Button(self.game_frame, text="Quit", fg="white",
                                   bg="#660000", font="Arial 15 bold", width=20,
@@ -242,11 +237,17 @@ class Game:
         self.quit_button.grid(row=6, pady=10)
 
         # History Button (row 1)
-        self.stats_button = Button(self.help_export_frame,text="Game Stats...",
+        self.stats_button = Button(self.help_export_frame, text="Game Stats...",
                                    font="Arial 15 bold",
                                    bg="#003366", fg="white",
                                    command=lambda: self.to_stats(self.round_stats_list, self.games_stats_list))
         self.stats_button.grid(row=0, column=1, padx=2)
+
+        self.help_button = Button(self.help_export_frame, text="Help / Rules",
+                                  font="Arial 15 bold",
+                                  bg="#808080", fg="white",
+                                  command=self.to_help)
+        self.help_button.grid(row=0, column=0, padx=2)
 
     def to_stats(self, game_history, game_stats):
         Game(self, game_history, game_stats)
@@ -330,63 +331,13 @@ class Game:
             self.balance_label.config(fg="#660000", font="Arial 10 bold",
                                       text=balance_statement)
 
-    def to_quit(self):
-        root.destroy()
+    def to_help(self):
+        get_help = Help(self)
+        get_help.help_text.configure(Help)
 
-
-class Help:
-    def __init__(self, partner):
-
-        # Disable help button
-        partner.help_button.config(state=DISABLED)
-
-        # Sets up child window (ie: help box)
-        self.help_box = Toplevel()
-
-        # If users press at top, closes help and 'releases' help button
-        self.help_box.protocol('WN_DELETE_WINDOW', partial(self.close_help, partner))
-
-        # Set up GUI Frame
-        self.help_frame = Frame(self.help_box, width=300)
-        self.help_frame.grid()
-
-        # Set up Help heading (row 0)
-        self.how_heading = Label(self.help_frame, text="Help / Instructions",
-                                 font="arial 14 bold")
-        self.how_heading.grid(row=0)
-
-        help_text = "Choose an amount to play with and then choose the stakes. " \
-                    "Higher stakes cost more per round but you can win more as " \
-                    "well.\n\n" \
-                    "When you enter the play area, you will see three mystery " \
-                    "boxes. To reveal the contents of the boxes, click the" \
-                    "'Open Boxes' button. If you don't have enough money to play, " \
-                    "the button will turn red and you will need to quit the game.\n\n " \
-                    "The contents of the boxes will be added to your balance.   " \
-                    "The boxes could contain...\n\n " \
-                    "Low: Lead ($0) | Copper ($1) | Silver ($2) | Gold ($10)\n " \
-                    "Medium: Lead ($0) | Copper ($2) | Silver ($4) | Gold(25)\n " \
-                    "High: Lead ($0) | Copper ($5) | Silver($10) | Gold ($50)\n\n " \
-                    "If each box contains gold, you earn $30 (low stakes). If " \
-                    "they contained copper, silver and gold, you would receive " \
-                    "$13 ($1 + $2 + $10) and so on."
-
-        # Help text (label, row 1)
-        self.help_text = Label(self.help_frame, text=help_text,
-                               justify=LEFT, wrap=400, padx=10, pady=10)
-        self.help_text.grid(row=1)
-
-        # Dismiss button (row 2)
-        self.dismiss_button = Button(self.help_frame, text="Dismiss",
-                                     width=10, bg="#660000", fg="white",
-                                     font="arial 15 bold",
-                                     padx=10, pady=10)
-        self.dismiss_button.grid(row=2, pady=10)
-
-    def close_help(self, partner):
-        # Put help button back to normal...
+    def to_quit(self, partner):
         partner.help_button.config(state=NORMAL)
-        self.help_box.destroy()
+        self.game_box.destroy()
 
 
 class GameStats:
@@ -495,6 +446,60 @@ class GameStats:
         # Put help button back to normal...
         partner.stats_button.config(state=NORMAL)
         self.stats_box.destroy()
+
+
+class Help:
+    def __init__(self, partner):
+        # Disable help button
+        partner.help_button.config(state=DISABLED)
+
+        # Sets up child window (ie: help box)
+        self.help_box = Toplevel()
+
+        # If users press at top, closes help and 'releases' help button
+        self.help_box.protocol('WN_DELETE_WINDOW', partial(self.close_help, partner))
+
+        # Set up GUI Frame
+        self.help_frame = Frame(self.help_box, width=300)
+        self.help_frame.grid()
+
+        # Set up Help heading (row 0)
+        self.how_heading = Label(self.help_frame, text="Help / Instructions",
+                                 font="arial 14 bold")
+        self.how_heading.grid(row=0)
+
+        help_text = "Choose an amount to play with and then choose the stakes. " \
+                    "Higher stakes cost more per round but you can win more as " \
+                    "well.\n\n" \
+                    "When you enter the play area, you will see three mystery " \
+                    "boxes. To reveal the contents of the boxes, click the" \
+                    "'Open Boxes' button. If you don't have enough money to play, " \
+                    "the button will turn red and you will need to quit the game.\n\n " \
+                    "The contents of the boxes will be added to your balance.   " \
+                    "The boxes could contain...\n\n " \
+                    "Low: Lead ($0) | Copper ($1) | Silver ($2) | Gold ($10)\n " \
+                    "Medium: Lead ($0) | Copper ($2) | Silver ($4) | Gold(25)\n " \
+                    "High: Lead ($0) | Copper ($5) | Silver($10) | Gold ($50)\n\n " \
+                    "If each box contains gold, you earn $30 (low stakes). If " \
+                    "they contained copper, silver and gold, you would receive " \
+                    "$13 ($1 + $2 + $10) and so on."
+
+        # Help text (label, row 1)
+        self.help_text = Label(self.help_frame, text=help_text,
+                               justify=LEFT, wrap=400, padx=10, pady=10)
+        self.help_text.grid(row=1)
+
+        # Dismiss button (row 2)
+        self.dismiss_button = Button(self.help_frame, text="Dismiss",
+                                     width=10, bg="#660000", fg="white",
+                                     font="arial 15 bold",
+                                     padx=10, pady=10)
+        self.dismiss_button.grid(row=2, pady=10)
+
+    def close_help(self, partner):
+        # Put help button back to normal...
+        partner.help_button.config(state=NORMAL)
+        self.help_box.destroy()
 
 # main routine
 if __name__ == "__main__":
