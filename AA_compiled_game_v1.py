@@ -77,11 +77,6 @@ class Start:
         self.medium_stakes_button.config(state=DISABLED)
         self.high_stakes_button.config(state=DISABLED)
 
-        # Help button
-        self.help_button = Button(self.start_frame, text="How to play",
-                                  bg="#808080", fg="white", font=button_font)
-        self.help_button.grid(row=4, pady=10)
-
     def check_funds(self):
         starting_balance = self.start_amount_entry.get()
 
@@ -140,14 +135,13 @@ class Start:
         # retrieve starting balance
         starting_balance = self.starting_funds.get()
 
-        self.start_frame.destroy()
         Game(self, stakes, starting_balance)
+
+        self.start_frame.destroy()
 
 
 class Game:
     def __init__(self, partner, stakes, starting_balance):
-        print(stakes)
-        print(starting_balance)
 
         # initialise variables
         self.balance = IntVar()
@@ -160,7 +154,7 @@ class Game:
         self.multiplier.set(stakes)
 
         # Formatting variables...
-        self.games_stats_list = [50, 6]
+        self.game_stats_list = [starting_balance, starting_balance]
 
         # list for holding statistics
         self.round_stats_list = []
@@ -168,8 +162,8 @@ class Game:
         # GUI setup
         self.game_box = Toplevel()
 
-        # If users press cross at top, game quits
-        self.game_box.protocol('WN_DELETE_WINDOW', self.to_quit)
+        # If users press at top, closes help and 'releases' help button
+        self.game_box.protocol('WN_DELETE_WINDOW', partial(self.close_game, partner))
 
         self.game_frame = Frame(self.game_box)
         self.game_frame.grid()
@@ -230,17 +224,11 @@ class Game:
         self.help_export_frame = Frame(self.game_frame)
         self.help_export_frame.grid(row=5, pady=10)
 
-        # Quit Button
-        self.quit_button = Button(self.game_frame, text="Quit", fg="white",
-                                  bg="#660000", font="Arial 15 bold", width=20,
-                                  command=self.to_quit, padx=10, pady=10)
-        self.quit_button.grid(row=6, pady=10)
-
         # History Button (row 1)
         self.stats_button = Button(self.help_export_frame, text="Game Stats...",
                                    font="Arial 15 bold",
                                    bg="#003366", fg="white",
-                                   command=lambda: self.to_stats(self.round_stats_list, self.games_stats_list))
+                                   command=lambda: self.to_stats(self.round_stats_list, self.game_stats_list))
         self.stats_button.grid(row=0, column=1, padx=2)
 
         self.help_button = Button(self.help_export_frame, text="Help / Rules",
@@ -249,8 +237,38 @@ class Game:
                                   command=self.to_help)
         self.help_button.grid(row=0, column=0, padx=2)
 
+        # Quit Button
+        self.quit_button = Button(self.game_frame, text="Quit", fg="white",
+                                  bg="#660000",
+                                  font="Arial 15 bold",
+                                  width=20,
+                                  command=partial(self.close_game, partner))
+        self.quit_button.grid(row=6, pady=10)
+
+    def close_game(self, partner):
+        # Put help button back to normal...
+        self.game_box.destroy()
+
     def to_stats(self, game_history, game_stats):
-        Game(self, game_history, game_stats)
+        Stats(self, game_history, game_stats)
+
+    def to_help(self):
+        get_help = Help(self)
+        get_help.help_text.configure(text="Choose an amount to play with and then choose the stakes. "
+                                          "Higher stakes cost more per round but you can win more as "
+                                          "well.\n\n"
+                                          "When you enter the play area, you will see three mystery "
+                                          "boxes. To reveal the contents of the boxes, click the"
+                                          "'Open Boxes' button. If you don't have enough money to play, "
+                                          "the button will turn red and you will need to quit the game.\n\n "
+                                          "The contents of the boxes will be added to your balance.   "
+                                          "The boxes could contain...\n\n "
+                                          "Low: Lead ($0) | Copper ($1) | Silver ($2) | Gold ($10)\n "
+                                          "Medium: Lead ($0) | Copper ($2) | Silver ($4) | Gold(25)\n "
+                                          "High: Lead ($0) | Copper ($5) | Silver($10) | Gold ($50)\n\n "
+                                          "If each box contains gold, you earn $30 (low stakes). If "
+                                          "they contained copper, silver and gold, you would receive "
+                                          "$13 ($1 + $2 + $10) and so on.")
 
     def reveal_boxes(self):
         # retrieve the balance from the initial functions...
@@ -303,6 +321,10 @@ class Game:
         # Set balance to new balance
         self.balance.set(current_balance)
 
+        # update game_stats_list with current balance (replace item in
+        # position 1 with current balance)
+        self.game_stats_list[1] = current_balance
+
         balance_statement = "Game Cost: ${}\nPlayback: ${} \n" \
                             "Current Balance: ${}".format(5 * stakes_multiplier,
                                                           round_winnings,
@@ -319,6 +341,7 @@ class Game:
 
         # Edit label so user can see their balance
         self.balance_label.configure(text=balance_statement)
+        self.game_stats_list[1] = current_balance
 
         if current_balance < 5 * stakes_multiplier:
             self.play_button.config(state=DISABLED)
@@ -331,19 +354,9 @@ class Game:
             self.balance_label.config(fg="#660000", font="Arial 10 bold",
                                       text=balance_statement)
 
-    def to_help(self):
-        get_help = Help(self)
-        get_help.help_text.configure(Help)
 
-    def to_quit(self, partner):
-        partner.help_button.config(state=NORMAL)
-        self.game_box.destroy()
-
-
-class GameStats:
+class Stats:
     def __init__(self, partner, game_history, game_stats):
-
-        print(game_history)
 
         # disable help button
         partner.stats_button.config(state=DISABLED)
@@ -439,7 +452,8 @@ class GameStats:
         self.dismiss_button = Button(self.details_frame, text="Dismiss",
                                      width=10, bg="#660000", fg="white",
                                      font="arial 15 bold",
-                                     padx=10, pady=10)
+                                     padx=10, pady=10,
+                                     command=partial(self.close_stats, partner))
         self.dismiss_button.grid(row=4, pady=10)
 
     def close_stats(self, partner):
@@ -448,9 +462,132 @@ class GameStats:
         self.stats_box.destroy()
 
 
+class Export:
+    def __init__(self, partner, game_history, all_game_stats):
+        print(game_history)
+
+        # disable export button
+        partner.export_button.config(state=DISABLED)
+
+        # Sets up child window (ie: export box)
+        self.export_box = Toplevel()
+
+        # if users press cross at top, closes and 'releases' export button
+        self.export_box.protocol('WM_DELETE_WINDOW', partial(self.close_export,
+                                                             partner))
+        # Set up GUI Frame
+        self.export_frame = Frame(self.export_box, width=300)
+        self.export_frame.grid()
+
+        # Sets up Export heading (row 0)
+        self.how_heading = Label(self.export_frame, text="Export / "
+                                                         "Instructions",
+                                 font="arial 14 bold")
+        self.how_heading.grid(row=0)
+
+        # Export Instructions (label, row 1)
+        self.export_text = Label(self.export_frame, text="Enter a filename in the "
+                                                         "enter below already "
+                                                         "exists, its contents "
+                                                         "will be replaced with "
+                                                         "your calculation history ",
+                                 justify=LEFT, bg="#ffafaf", fg="maroon",
+                                 font="Arial 10 italic", wrap=225, padx=10, pady=10)
+        self.export_text.grid(row=2, pady=10)
+
+        # Filename Entry Box (row 3)
+        self.filename_entry = Entry(self.export_frame, width=20,
+                                    font="Arial 14 bold", justify=CENTER)
+        self.filename_entry.grid(row=3, pady=10)
+
+        # Error message labels (initially blank, row 4)
+        self.save_error_label = Label(self.export_frame, text="", fg="maroon")
+        self.save_error_label.grid(row=4)
+
+        # Save / Cancel Frame (row 5)
+        self.save_cancel_frame = Frame(self.export_frame)
+        self.save_cancel_frame.grid(row=5, pady=10)
+
+        # Save and Cancel Buttons (row 0 of save_cancel_frame)
+        self.save_button = Button(self.save_cancel_frame, text="Save",
+                                  font="Arial 15 bold", bg="#660000", fg="white",
+                                  command=partial(lambda: self.save_history(partner, game_history, all_game_stats)))
+        self.save_button.grid(row=0, column=0)
+
+        self.cancel_button = Button(self.save_cancel_frame, text="Cancel",
+                                    font="Arial 15 bold", bg="#660000", fg="white",
+                                    command=partial(self.close_export, partner))
+        self.cancel_button.grid(row=0, column=1)
+
+    def save_history(self, partner, game_history, game_stats):
+
+        # Regular expression to check filename is valid
+        valid_char = "[A-Za-z0-9_]"
+        has_errors = "no"
+
+        filename = self.filename_entry.get()
+        print(filename)
+
+        for letter in filename:
+            if re.match(valid_char, letter):
+                continue
+
+            elif letter == " ":
+                problem = "(no space allowed)"
+
+            else:
+                problem = ("(no {}'s allowed". format(letter))
+            has_errors = "yes"
+            break
+
+        if filename == "":
+            problem = "can't be blank"
+            has_errors = "yes"
+
+        if has_errors == "yes":
+            # Display error message
+            self.save_error_label.config(text="Invalid filename - {}".format(problem))
+            # Change entry box background to pink
+            self.filename_entry.config(bg="#ffafaf")
+
+        else:
+            # If there are no errors, generate text file and then close dialogue
+            # add .txt suffix
+            filename = filename + ".txt"
+
+            # create file to hold data
+            f = open(filename, "w+")
+
+            # Heading for Stats
+            f.write("Game Statistics\n\n")
+
+            # Game stats
+            for round in game_stats:
+                f.write(round + "\n")
+
+            # Heading for Rounds
+            f.write("\nRound Details\n\n")
+
+            # add new line at end of each item
+            for item in game_history:
+                f.write(item + "\n")
+
+            # close file
+            f.close()
+
+            # close dialogue
+            self.close_export(partner)
+
+    def close_export(self, partner):
+        # Put help button back to normal...
+        partner.stats_button.config(state=NORMAL)
+        self.export_box.destroy()
+
+
 class Help:
     def __init__(self, partner):
-        # Disable help button
+
+        # disable help button
         partner.help_button.config(state=DISABLED)
 
         # Sets up child window (ie: help box)
@@ -468,24 +605,8 @@ class Help:
                                  font="arial 14 bold")
         self.how_heading.grid(row=0)
 
-        help_text = "Choose an amount to play with and then choose the stakes. " \
-                    "Higher stakes cost more per round but you can win more as " \
-                    "well.\n\n" \
-                    "When you enter the play area, you will see three mystery " \
-                    "boxes. To reveal the contents of the boxes, click the" \
-                    "'Open Boxes' button. If you don't have enough money to play, " \
-                    "the button will turn red and you will need to quit the game.\n\n " \
-                    "The contents of the boxes will be added to your balance.   " \
-                    "The boxes could contain...\n\n " \
-                    "Low: Lead ($0) | Copper ($1) | Silver ($2) | Gold ($10)\n " \
-                    "Medium: Lead ($0) | Copper ($2) | Silver ($4) | Gold(25)\n " \
-                    "High: Lead ($0) | Copper ($5) | Silver($10) | Gold ($50)\n\n " \
-                    "If each box contains gold, you earn $30 (low stakes). If " \
-                    "they contained copper, silver and gold, you would receive " \
-                    "$13 ($1 + $2 + $10) and so on."
-
         # Help text (label, row 1)
-        self.help_text = Label(self.help_frame, text=help_text,
+        self.help_text = Label(self.help_frame,
                                justify=LEFT, wrap=400, padx=10, pady=10)
         self.help_text.grid(row=1)
 
@@ -493,7 +614,8 @@ class Help:
         self.dismiss_button = Button(self.help_frame, text="Dismiss",
                                      width=10, bg="#660000", fg="white",
                                      font="arial 15 bold",
-                                     padx=10, pady=10)
+                                     padx=10, pady=10,
+                                     command=partial(self.close_help, partner))
         self.dismiss_button.grid(row=2, pady=10)
 
     def close_help(self, partner):

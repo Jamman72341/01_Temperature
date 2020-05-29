@@ -177,14 +177,14 @@ class History:
 
         # History text (label, row 1)
         self.history_text = Label(self.history_frame,
-                                          text="Here are your most recent "
-                                               "calculations. Please use the "
-                                               "export button to create a text "
-                                               "file of all your calculation for "
-                                               "this session", wrap=250,
-                                          font="arial 10 italic",
-                                          justify=LEFT, bg=background, fg="maroon",
-                                          padx=10, pady=10)
+                                  text="Here are your most recent "
+                                       "calculations. Please use the "
+                                       "export button to create a text "
+                                       "file of all your calculation for "
+                                       "this session", wrap=250,
+                                  font="arial 10 italic",
+                                  justify=LEFT, bg=background, fg="maroon",
+                                  padx=10, pady=10)
         self.history_text.grid(row=1)
 
         # History Output goes here.. (row 2)
