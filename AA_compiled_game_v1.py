@@ -361,6 +361,8 @@ class Stats:
         # disable help button
         partner.stats_button.config(state=DISABLED)
 
+        self.all_stats_list = []
+
         heading = "Arial 12 bold"
         content = "Arial 12"
 
@@ -454,12 +456,23 @@ class Stats:
                                      font="arial 15 bold",
                                      padx=10, pady=10,
                                      command=partial(self.close_stats, partner))
-        self.dismiss_button.grid(row=4, pady=10)
+        self.dismiss_button.grid(row=5, pady=10)
+
+        self.export_button = Button(self.details_frame, text="Export",
+                                    font="Arial 12 bold",
+                                    bg="#003366",
+                                    fg="white",
+                                    padx=40, pady=5,
+                                    command=lambda: self.export(game_history, partner))
+        self.export_button.grid(row=4)
 
     def close_stats(self, partner):
         # Put help button back to normal...
         partner.stats_button.config(state=NORMAL)
         self.stats_box.destroy()
+
+    def export(self, game_history, partner):
+        Export(self, game_history, partner)
 
 
 class Export:
@@ -580,7 +593,7 @@ class Export:
 
     def close_export(self, partner):
         # Put help button back to normal...
-        partner.stats_button.config(state=NORMAL)
+        partner.export_button.config(state=NORMAL)
         self.export_box.destroy()
 
 
