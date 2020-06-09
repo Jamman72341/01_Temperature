@@ -1,1 +1,25 @@
-<mxfile host="app.diagrams.net" modified="2020-06-09T21:22:57.667Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36" etag="7u6f-zI_ool58HXPxU2b" version="13.2.1" type="github"><diagram id="ELy54gUj_svtiCcX6ysn" name="Page-1">zVZdb5swFP01PC4yGBLy2HytD4u0KZW69WVysQErBiPjBNJfPxsbCKGROi2p5kSRfe61uT7n3AgHLrP6q0BFuuWYMMcDuHbgyvE81/c8R38BPhlkNvcNkAiKbVIP7OgbsSCw6IFiUg4SJedM0mIIRjzPSSQHGBKCV8O0mLPhUwuUkBGwixAbo88Uy9SgYQB6/JHQJG2f7AIbyVCbbIEyRZhXZxBcO3ApOJdmltVLwjR5LS9m3+ZKtCtMkFx+ZMMiiOpf5OXnD5gX2cv2+Lt6O36ZmVOOiB3shZ9prsv0wBOVigRTujy1fJRS8H1HhevARXcvoBYYlSnBdoEYTXI1j1SFRCgglRnrdxX6yKxOtHEmGY/2h2KiZJSI5kSUk8oU0h/DSKwuujgSIakS6MHCkhf6vAJFNE++NTmrUCNNpUvOuPCa2iEAYRTHwxA0ocjXHxWKVQFNwODTZig8U1U9kbph2mRZr7oztWbolbAFivaJ4IcctwfkPCc6mzJ2AVna1VVIfVVPt3OJai/CMyLFSaW0G6bWWLazOqNVvU+D1qfpmUdhaEFkeyPpzu7toybWQX/hJjhy06OxElc/3xk6jezU0NUYRpuiSqkkO6WkjlbKF0PPnLEOwQWvSiv3FbnEG8rbCj9dP2zG6oJm3EYOCMOBHB31Z3K4s2Ash38vNfyRGluC6SG7sQhXKL0QJwYIAvSeOIvV7HYiBPNJMJDBD9+RAXqfKEMwkmGNyvt2wkaNhtLrZN+xE9w5+M8kmI7/l5DA/yjBJeWgJ/Yj/XEDogP4eUSrZf+q0sTOXvjg+g8=</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-06-09T21:23:28.708Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36" etag="VOPZ_wZVhZ10cCNUD2pt" version="13.2.1" type="github">
+  <diagram id="ELy54gUj_svtiCcX6ysn" name="Page-1">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="B5cxYeZXQ3npmZMv_wzv-7" value="MATH&#39;S QUIZ" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.window;align=left;verticalAlign=top;spacingLeft=8;strokeColor2=#008cff;strokeColor3=#c4c4c4;fontColor=#666666;mainText=;fontSize=17;labelBackgroundColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="160" y="220" width="550" height="380" as="geometry" />
+        </mxCell>
+        <mxCell id="B5cxYeZXQ3npmZMv_wzv-3" value="How To Play" style="rounded=1;whiteSpace=wrap;html=1;fontSize=30;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="338" y="550" width="175" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="B5cxYeZXQ3npmZMv_wzv-4" value="Medium" style="rounded=1;whiteSpace=wrap;html=1;fontSize=30;fontColor=#000000;fillColor=#f0a30a;strokeColor=#BD7000;" parent="1" vertex="1">
+          <mxGeometry x="359.5" y="480" width="132" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="B5cxYeZXQ3npmZMv_wzv-5" value="Easy" style="rounded=1;whiteSpace=wrap;html=1;fontSize=30;fillColor=#FFFF00;strokeColor=#BD7000;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="190" y="480" width="132" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="B5cxYeZXQ3npmZMv_wzv-6" value="Hard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF0000;fontSize=30;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="530" y="480" width="132" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
