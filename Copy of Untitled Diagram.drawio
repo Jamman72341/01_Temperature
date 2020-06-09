@@ -1,10 +1,10 @@
-<mxfile host="app.diagrams.net" modified="2020-06-09T21:23:28.708Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36" etag="VOPZ_wZVhZ10cCNUD2pt" version="13.2.1" type="github">
+<mxfile host="app.diagrams.net" modified="2020-06-09T21:37:57.147Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36" etag="s1_V6Z6HdrpzZ-dHNpc8" version="13.2.1" type="github">
   <diagram id="ELy54gUj_svtiCcX6ysn" name="Page-1">
     <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="B5cxYeZXQ3npmZMv_wzv-7" value="MATH&#39;S QUIZ" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.window;align=left;verticalAlign=top;spacingLeft=8;strokeColor2=#008cff;strokeColor3=#c4c4c4;fontColor=#666666;mainText=;fontSize=17;labelBackgroundColor=none;fillColor=none;" parent="1" vertex="1">
+        <mxCell id="B5cxYeZXQ3npmZMv_wzv-7" value="MATH&#39;S QUIZ" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.window;align=left;verticalAlign=top;spacingLeft=8;strokeColor2=#008cff;strokeColor3=#c4c4c4;fontColor=#666666;mainText=;fontSize=20;labelBackgroundColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="160" y="220" width="550" height="380" as="geometry" />
         </mxCell>
         <mxCell id="B5cxYeZXQ3npmZMv_wzv-3" value="How To Play" style="rounded=1;whiteSpace=wrap;html=1;fontSize=30;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#000000;" parent="1" vertex="1">
@@ -18,6 +18,12 @@
         </mxCell>
         <mxCell id="B5cxYeZXQ3npmZMv_wzv-6" value="Hard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF0000;fontSize=30;fontColor=#000000;" parent="1" vertex="1">
           <mxGeometry x="530" y="480" width="132" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="2Y-BYGZ19uD1NlT2gbUc-4" value="MATH&#39;S QUIZ" style="text;html=1;strokeColor=#006EAF;fillColor=#1ba1e2;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=40;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="160" y="250" width="550" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="2Y-BYGZ19uD1NlT2gbUc-6" value="To select the difficulty of the math&#39;s quiz&amp;nbsp;&lt;br&gt;press either &#39;Easy&#39;, &#39;Medium&#39; or &#39;hard&#39;.&lt;br&gt;To learn how to play the math&#39;s quiz&lt;br&gt;press &#39;How To Play&#39; to learn the instructions." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="160" y="340" width="550" height="90" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
