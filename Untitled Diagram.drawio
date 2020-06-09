@@ -1,14 +1,23 @@
-<mxfile host="app.diagrams.net" modified="2020-06-08T22:55:01.611Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36" etag="W8oEZ7mB5SybhFxnmxKB" version="13.1.14" type="github">
+<mxfile host="app.diagrams.net" modified="2020-06-09T21:12:21.146Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36" etag="7dPzVix2pRlFdejkKrmt" version="13.2.1" type="github">
   <diagram id="ELy54gUj_svtiCcX6ysn" name="Page-1">
     <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="Jawda8FWdXlC7AJymwt9-5" value="MATH&#39;S QUIZ" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.window;align=left;verticalAlign=top;spacingLeft=8;strokeColor2=#008cff;strokeColor3=#c4c4c4;fontColor=#666666;mainText=;fontSize=20;labelBackgroundColor=none;" vertex="1" parent="1">
+        <mxCell id="Jawda8FWdXlC7AJymwt9-5" value="MATH&#39;S QUIZ" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.window;align=left;verticalAlign=top;spacingLeft=8;strokeColor2=#008cff;strokeColor3=#c4c4c4;fontColor=#666666;mainText=;fontSize=20;labelBackgroundColor=none;" parent="1" vertex="1">
           <mxGeometry x="150" y="220" width="550" height="380" as="geometry" />
         </mxCell>
-        <mxCell id="Jawda8FWdXlC7AJymwt9-6" value="MATH&#39;S QUIZ" style="rounded=0;whiteSpace=wrap;html=1;fontSize=40;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="Jawda8FWdXlC7AJymwt9-6" value="MATH&#39;S QUIZ" style="rounded=0;whiteSpace=wrap;html=1;fontSize=40;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#000000;" parent="1" vertex="1">
           <mxGeometry x="150" y="250" width="550" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oAGWergNkJIxraLx_zzx-2" value="Welcome to the MATH&#39;S QUIZ&lt;br&gt;where you will test your knowledge&lt;br&gt;on general math&#39;s questions." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="150" y="310" width="550" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="oAGWergNkJIxraLx_zzx-3" value="press &#39;Start Quiz&#39; to begin" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=30;" vertex="1" parent="1">
+          <mxGeometry x="245" y="400" width="360" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="oAGWergNkJIxraLx_zzx-4" value="Start Quiz" style="rounded=1;whiteSpace=wrap;html=1;fontSize=30;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="305" y="490" width="240" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
