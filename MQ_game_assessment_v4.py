@@ -10,6 +10,7 @@ class Quiz:
         # Formatting variables...
         font_color = "black"
 
+        # quiz GUI
         self.quiz_frame = Frame()
         self.quiz_frame.grid(padx=10)
 
@@ -48,10 +49,12 @@ class Quiz:
         self.choice_frame = Frame(self.quiz_frame, width=200)
         self.choice_frame.grid(row=1)
 
+        # label for error feedback
         self.amount_error_label = Label(self.choice_frame, font="arial 10 bold",
-                                        text="Error label is here", fg="red")
+                                        text="", fg="red")
         self.amount_error_label.grid(row=0)
 
+        # Number of questions label and entry
         self.cho_num_label = Label(self.choice_frame, text="Number of Questions",
                                    font="arial 12 bold",
                                    fg=font_color)
@@ -61,6 +64,7 @@ class Quiz:
                                    font="arial 15 bold", width=10)
         self.cho_num_entry.grid(row=1, column=1)
 
+        # Low number label and entry
         self.low_num_label = Label(self.choice_frame, text="Low number amount",
                                    font="arial 12 bold",
                                    fg=font_color)
@@ -70,6 +74,7 @@ class Quiz:
                                    font="arial 15 bold", width=10)
         self.low_num_entry.grid(row=2, column=1)
 
+        # High number label and entry
         self.high_num_label = Label(self.choice_frame, text="High number amount",
                                     font="arial 12 bold",
                                     fg=font_color)
@@ -79,6 +84,7 @@ class Quiz:
                                     font="arial 15 bold", width=10)
         self.high_num_entry.grid(row=3, column=1)
 
+        # Frame for entry button (row 4)
         self.enter_frame = Frame(self.quiz_frame)
         self.enter_frame.grid(row=4)
 
@@ -86,23 +92,28 @@ class Quiz:
                                           font="arial 14 bold", command=self.check_question)
         self.question_amount_btn.grid(row=0, pady=10, padx=10)
 
+        # Frame for Multiplication, subtraction and addition button (row 5)
         self.cho_btn__frame = Frame(self.quiz_frame)
         self.cho_btn__frame.grid(row=5)
 
+        # Addition button
         self.addition_btn = Button(self.cho_btn__frame, text="Addition", font="arial 17 bold", fg=font_color,
                                    bg="yellow", command=lambda: self.to_game(1))
         self.addition_btn.grid(row=1, column=0, pady=10)
 
+        # Subtraction button
         self.subtraction_btn = Button(self.cho_btn__frame,
                                       text="Subtraction", font="arial 17 bold", fg=font_color,
                                       bg="orange", command=lambda: self.to_game(2))
         self.subtraction_btn.grid(row=1, column=1, pady=10)
 
+        # Multiplication button
         self.multiplication_btn = Button(self.cho_btn__frame,
                                          text="Multiplication", font="arial 17 bold", fg=font_color,
                                          bg="red", command=lambda: self.to_game(3))
         self.multiplication_btn.grid(row=1, column=2, pady=10)
 
+        # Frame for help button (row 6)
         self.help_frame = Frame(self.quiz_frame)
         self.help_frame.grid(row=6)
 
@@ -110,16 +121,19 @@ class Quiz:
         self.subtraction_btn.config(state=DISABLED)
         self.multiplication_btn.config(state=DISABLED)
 
-        # Help Button (row 2)
+        # Help Button
         self.help_button = Button(self.help_frame,
                                   text="Help / Rules", font="arial 14 bold", fg="black",
                                   bg="#0197f6", command=self.help)
         self.help_button.grid(row=0, pady=10)
 
+        # function to take me to help class
     def help(self):
         get_help = Help(self)
         get_help.help_text.configure()
 
+        # function to get question amount, low amount and high amount
+        # and have error feedback for any errors that occur
     def check_question(self):
         starting_question = self.cho_num_entry.get()
         low_amount = self.low_num_entry.get()
@@ -131,7 +145,7 @@ class Quiz:
         has_error = "no"
         error_feedback = ""
 
-        # change background to white (for testing purposes) ...
+        # change background to white
         self.cho_num_entry.config(bg="white")
         self.amount_error_label.config(text="")
         self.low_num_entry.config(bg="white")
@@ -165,7 +179,7 @@ class Quiz:
 
             if low_amount < -100:
                 has_error = "yes"
-                error_feedback = "the low number is lower than -100"
+                error_feedback = "the low number is higher than -100"
                 self.low_num_entry.config(bg=error_back)
             elif low_amount > 1000:
                 has_error = "yes"
@@ -176,11 +190,14 @@ class Quiz:
             has_error = "yes"
             error_feedback = "Please fill the boxes with whole numbers"
             self.low_num_entry.config(bg=error_back)
-            self.high_num_entry.config(bg=error_back)
+
+        if has_error == "yes":
+            self.amount_error_label.config(text=error_feedback)
+
         try:
             high_amount = int(high_amount)
 
-            if high_amount < low_amount:
+            if high_amount <= low_amount:
                 has_error = "yes"
                 error_feedback = "the high number needs to be higher than the low number"
                 self.high_num_entry.config(bg=error_back)
@@ -192,15 +209,10 @@ class Quiz:
         except ValueError:
             has_error = "yes"
             error_feedback = "Please fill the boxes with whole numbers"
-            self.low_num_entry.config(bg=error_back)
             self.high_num_entry.config(bg=error_back)
 
         if has_error == "yes":
             self.amount_error_label.config(text=error_feedback)
-            self.amount_error_label.config(text=error_feedback)
-            self.amount_error_label.config(text=error_feedback)
-
-            print(error_feedback)
 
         else:
             self.starting_question.set(starting_question)
@@ -209,12 +221,15 @@ class Quiz:
             self.addition_btn.config(state=NORMAL)
             self.subtraction_btn.config(state=NORMAL)
             self.multiplication_btn.config(state=NORMAL)
+            self.cho_num_entry.config(state=DISABLED)
+            self.low_num_entry.config(state=DISABLED)
+            self.high_num_entry.config(state=DISABLED)
 
+        # function to take me to the game
     def to_game(self, op):
         starting_question = self.cho_num_entry.get()
         low_amount = self.low_num_entry.get()
         high_amount = self.high_num_entry.get()
-        print(starting_question, low_amount, high_amount)
 
         Game(self, op, starting_question, low_amount, high_amount)
 
@@ -259,7 +274,7 @@ class Game:
 
         self.history_questions.append(questions)
 
-        # disable button
+        # disable buttons
         partner.cho_num_entry.config(state=DISABLED)
         partner.low_num_entry.config(state=DISABLED)
         partner.high_num_entry.config(state=DISABLED)
@@ -278,10 +293,12 @@ class Game:
         # Set up GUI Frame
         self.addition_frame = Frame(self.addition_box, width=300)
         self.addition_frame.grid()
+
         # Set up Geo Instruction heading (row 0)
         self.heading = Label(self.addition_frame, text=op_text,
                              font="arial 20 bold")
         self.heading.grid(row=0)
+
         # Geo text (label, row 1)
         self.game = Label(self.addition_frame,
                           text="Fill the boxes",
@@ -290,14 +307,17 @@ class Game:
 
         self.ask_questions_frame = Frame(self.addition_frame)
         self.ask_questions_frame.grid(row=1)
+
         self.get1_label = Label(self.ask_questions_frame,
                                 text=questions,
                                 font="arial 10 bold", fg="black")
         self.get1_label.grid(row=1)
 
+        # entry to ask either addition, subtraction or multiplication questions
         self.checking_ans_btn = Entry(self.ask_questions_frame, font="arial 15 bold")
         self.checking_ans_btn.grid(row=2)
 
+        # button to check if the answer is correct or incorrect
         self.check_ans_btn = Button(self.ask_questions_frame, text="Check Answer", font="arial 10 bold", fg="black",
                                     bg="#0197f6", pady=7,
                                     command=lambda: self.check_ans(low_amount, high_amount, op, starting_question,
@@ -305,15 +325,17 @@ class Game:
                                                                    self.history_questions))
         self.check_ans_btn.grid(row=2, column=1)
 
+        # frame for dismiss button (row 3)
         self.dismiss_export_frame = Frame(self.addition_frame)
         self.dismiss_export_frame.grid(row=3)
 
-    # Dismiss button (row 4)
+        # Dismiss button
         self.dismiss_btn = Button(self.dismiss_export_frame, text="Dismiss", width=10, bg="red",
                                   font="arial 10 bold",
                                   command=partial(self.close_addition, partner))
         self.dismiss_btn.grid(row=1, pady=10)
 
+        # function to check if the answer is correct or incorrect
     def check_ans(self, low_amount, high_amount, op, starting_question, questions_played, how_many_right,
                   history_questions):
         answer = self.checking_ans_btn.get()
@@ -331,7 +353,7 @@ class Game:
             self.history_questions.append(answer)
 
             if answer != correct:
-                self.feedback_label = Label(self.ask_questions_frame, text=" oops wrong answer ",
+                self.feedback_label = Label(self.ask_questions_frame, text=" sorry, wrong answer ",
                                             font="arial 10 bold", fg="black", width=25)
                 self.feedback_label.grid(row=3)
             elif answer == correct:
@@ -375,6 +397,7 @@ class Game:
                                   text="You have played {}/{}".format(questions_played, starting_question))
         self.played_label.grid(row=4)
 
+        # function to print a new question
     def next(self, low_amount, high_amount, op, starting_question, questions_played, how_many_right, history_questions):
         starting_question = int(starting_question)
         self.checking_ans_btn.config(state=NORMAL)
@@ -388,7 +411,6 @@ class Game:
             var_correct = hi_lo_num + hi_lo_num2
             self.correct.set(var_correct)
             questions_played += 1
-            print(questions_played)
         elif op == 2:
             hi_lo_num = random.randrange(low_amount, high_amount)
             hi_lo_num2 = random.randrange(low_amount, high_amount)
@@ -408,6 +430,7 @@ class Game:
 
         self.history_questions.append(questions)
 
+        # button to check if the answer is correct or incorrect
         self.check_ans_btn = Button(self.ask_questions_frame, text="Check Answer", font="arial 10 bold", fg="black",
                                     bg="#0197f6", pady=7,
                                     command=lambda: self.check_ans(low_amount, high_amount, op,
@@ -416,13 +439,10 @@ class Game:
         self.check_ans_btn.grid(row=2, column=1)
 
     def close_addition(self, partner):
-        # Put help button back to normal
+        # Put buttons back to normal
         partner.cho_num_entry.config(state=NORMAL)
         partner.low_num_entry.config(state=NORMAL)
         partner.high_num_entry.config(state=NORMAL)
-        partner.addition_btn.config(state=NORMAL)
-        partner.subtraction_btn.config(state=NORMAL)
-        partner.multiplication_btn.config(state=NORMAL)
         partner.help_button.config(state=NORMAL)
         partner.question_amount_btn.config(state=NORMAL)
         self.addition_box.destroy()
@@ -434,7 +454,7 @@ class Game:
 class Help:
     def __init__(self, partner):
 
-        # disable help button
+        # disable all quiz class buttons
         partner.question_amount_btn.config(state=DISABLED)
         partner.cho_num_entry.config(state=DISABLED)
         partner.low_num_entry.config(state=DISABLED)
@@ -453,12 +473,14 @@ class Help:
         # Set up GUI Frame
         self.help_frame = Frame(self.help_box, width=300)
         self.help_frame.grid()
+
         # Set up help heading (row 0)
         self.how_heading = Label(self.help_frame,
                                  text="Help / Instruction",
                                  font="arial 20 bold",
                                  bg="#0196f7")
         self.how_heading.grid(row=0)
+
         # Help text (label, row 1)
         self.help_text = Label(self.help_frame,
                                text="This is a math quiz / game"
@@ -492,9 +514,6 @@ class Help:
 
 class Export:
     def __init__(self, partner, low_amount, high_amount, questions_played, how_many_right, history_questions):
-
-        print(low_amount, high_amount, questions_played, how_many_right)
-        print(history_questions)
 
         # disable export button
         partner.export_btn.config(state=DISABLED)
@@ -530,7 +549,7 @@ class Export:
         # Help text (label, row 1)
         self.history_label = Label(self.export_frame, text="your low number was: {}""\n"
                                                            "your high number was: {}""\n"
-                                                           "you have played {} around""\n"
+                                                           "you have played {} questions""\n"
                                                            "you got {} correct out of {}  ""\n"
                                    .format(low_amount, high_amount, questions_played, how_many_right, questions_played),
                                    font="arial 13 italic",
@@ -555,14 +574,15 @@ class Export:
                                     font="arial 14 bold")
         self.filename_entry.grid(row=4, pady=10)
 
+        # Frame for invalid filename (row 5)
         self.save_error_label = Label(self.export_frame, text="", fg="black")
         self.save_error_label.grid(row=5)
 
-        # Save / Cancel Frame (row 4)
+        # Save / Cancel Frame (row 6)
         self.save_cancel_frame = Frame(self.export_frame)
         self.save_cancel_frame.grid(row=6, pady=10)
 
-        # Save and Cancel buttons 9row 0 of save_cancel_frame)
+        # Save and Cancel buttons
         self.save_button = Button(self.save_cancel_frame, text="Save",
                                   font="arial 10 bold", fg="black",
                                   bg="#0197f6", padx=10, pady=10,
@@ -577,6 +597,7 @@ class Export:
                                     command=partial(self.close_export, partner))
         self.cancel_button.grid(row=0, column=1)
 
+        # function to save game history
     def save_history(self, partner, low_amount, high_amount, questions_played, how_many_right, history_questions):
 
         # Regular expression to check filename is valid
@@ -584,8 +605,6 @@ class Export:
         has_error = "no"
 
         filename = self.filename_entry.get()
-        print(filename)
-
         for letter in filename:
             if re.match(valid_char, letter):
                 continue
@@ -620,7 +639,7 @@ class Export:
             # add new line at end of each item
             f.write("your low number was: {}""\n".format(low_amount))
             f.write("your high number was: {}""\n".format(high_amount))
-            f.write("you have played {} around""\n".format(questions_played))
+            f.write("you have played {} questions""\n".format(questions_played))
             f.write("you got {} correct out of {}  ""\n".format(how_many_right, questions_played))
             f.write("{} ""\n".format(history_questions))
 
