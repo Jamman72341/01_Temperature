@@ -153,6 +153,8 @@ class Quiz:
         self.high_num_entry.config(bg="white")
         self.high_num_entry.config(text="")
 
+        # disables addition, subtraction and musltiplication button so that
+        # the user doesn't enter the game without low and high number and number of questions
         self.addition_btn.config(state=DISABLED)
         self.subtraction_btn.config(state=DISABLED)
         self.multiplication_btn.config(state=DISABLED)
@@ -160,6 +162,7 @@ class Quiz:
         try:
             starting_question = int(starting_question)
 
+            # checks if number of questions is either below 5 or above 30
             if starting_question < 5:
                 has_error = "yes"
                 error_feedback = "Sorry, you need more than 5 questions"
@@ -177,6 +180,7 @@ class Quiz:
         try:
             low_amount = int(low_amount)
 
+            # checks if low amount is below -100 or above 1000
             if low_amount < -100:
                 has_error = "yes"
                 error_feedback = "the low number is higher than -100"
@@ -197,6 +201,7 @@ class Quiz:
         try:
             high_amount = int(high_amount)
 
+            # checks if high amount is lower than low amount or if high amount is above 10000
             if high_amount <= low_amount:
                 has_error = "yes"
                 error_feedback = "the high number needs to be higher than the low number"
@@ -250,6 +255,7 @@ class Game:
 
         op = int(op)
 
+            # if addition is chosen, then prints addition question
         if op == 1:
             hi_lo_num = random.randrange(low_amount, high_amount)
             hi_lo_num2 = random.randrange(low_amount, high_amount)
@@ -257,6 +263,7 @@ class Game:
             var_correct = hi_lo_num + hi_lo_num2
             self.correct.set(var_correct)
             op_text = "Addition"
+            # if subtraction is chosen, then prints subtraction question
         elif op == 2:
             hi_lo_num = random.randrange(low_amount, high_amount)
             hi_lo_num2 = random.randrange(low_amount, high_amount)
@@ -264,6 +271,7 @@ class Game:
             var_correct = hi_lo_num - hi_lo_num2
             self.correct.set(var_correct)
             op_text = "Subtraction"
+            # if multiplication is chosen, then prints multiplication question
         elif op == 3:
             hi_lo_num = random.randrange(low_amount, high_amount)
             hi_lo_num2 = random.randrange(low_amount, high_amount)
@@ -305,6 +313,8 @@ class Game:
                           justify=LEFT, width=50, wrap=200)
         self.game.grid(row=1)
 
+        # frame for next button, check answer button and statements printed based on
+        # if the answer is wrong or not
         self.ask_questions_frame = Frame(self.addition_frame)
         self.ask_questions_frame.grid(row=1)
 
@@ -352,27 +362,32 @@ class Game:
             correct = int(var_correct)
             self.history_questions.append(answer)
 
+            # label for the question if the user gets the question wrong
             if answer != correct:
                 self.feedback_label = Label(self.ask_questions_frame, text=" sorry, wrong answer ",
                                             font="arial 10 bold", fg="black", width=25)
                 self.feedback_label.grid(row=3)
             elif answer == correct:
 
+                # label for the question if the user gets the question right
                 self.feedback_label = Label(self.ask_questions_frame, text=" That's the right answer",
                                             font="arial 10 bold", fg="black", width=25)
                 self.feedback_label.grid(row=3)
                 how_many_right += 1
 
+            # label for the question if the user doesn't input a question
         except ValueError:
             self.feedback_label = Label(self.ask_questions_frame, text="Wrong answer: no answer given",
                                         font="arial 10 bold", fg="black", width=25)
             self.feedback_label.grid(row=3)
 
+           # game over label
         if starting_question <= questions_played:
             self.game_over_label = Label(self.ask_questions_frame, text="Game Over", font="arial 10 bold", fg="black",
                                          bg="red", pady=10, padx=10)
             self.game_over_label.grid(row=2, column=1)
 
+            # frame for export button
             self.export_frame = Frame(self.addition_frame)
             self.export_frame.grid(row=2)
 
@@ -386,12 +401,14 @@ class Game:
         else:
             self.check_ans_btn.config(text="")
 
+            # next button to take the user to the next question
             self.next_btn = Button(self.ask_questions_frame, text="Next", font="arial 10 bold", fg="black",
                                    bg="#0197f6", pady=7,
                                    command=lambda: self.next(low_amount, high_amount, op, starting_question,
                                                                   questions_played, how_many_right, history_questions))
             self.next_btn.grid(row=2, column=1)
 
+        # label to say how many questions the user played
         self.played_label = Label(self.ask_questions_frame, font="arial 10 bold",
                                   fg="black", pady=7,
                                   text="You have played {}/{}".format(questions_played, starting_question))
